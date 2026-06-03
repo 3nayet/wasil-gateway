@@ -1,0 +1,14 @@
+services:
+  gateway:
+    image: nginx:1.27-alpine
+    container_name: wasil-gateway
+    ports:
+      - '8000:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    extra_hosts:
+      # Linux: docker doesn't auto-resolve host.docker.internal — this maps it
+      # to the docker bridge gateway. Mac/Windows already resolve it natively
+      # but this line is harmless there.
+      - 'host.docker.internal:host-gateway'
+    restart: unless-stopped

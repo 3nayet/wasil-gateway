@@ -1,0 +1,15 @@
+# Caddy auto-provisions Let's Encrypt certs for these hostnames.
+# Requires DNS A records pointing api.* and admin.* at the VM public IP.
+{
+    email {$ACME_EMAIL}
+}
+
+{$API_DOMAIN} {
+    encode gzip
+    reverse_proxy gateway:80
+}
+
+{$ADMIN_DOMAIN} {
+    encode gzip
+    reverse_proxy wasil-admin:80
+}
